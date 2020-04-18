@@ -1,0 +1,108 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 1 Mar, 2020, 4:56:05 PM
+    Author     : ac
+*/
+body{
+        margin: 0;
+    padding: 0;
+        background: #DCDDD8;
+}
+.row{
+                  margin:0;
+              }
+.menu-header li{
+    float:left;
+     padding: 20px 35px;
+    text-decoration: none;
+}
+
+.menu-header li a{
+    text-decoration: none;
+    color:white;
+}
+.main-header{
+    margin: 0;
+    padding:0;
+    height: 60px;
+    width:100%;
+    background:#354B5E;
+        
+}
+.menu-header{
+    float: right;
+    list-style: none;
+    margin: 0;
+    
+}
+
+.side-bar-item{
+      
+    display: block; 
+    padding:7%
+}
+.owner-sidebar{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color:white; 
+}
+.side-bar-item:hover{
+    background: #475F77;
+    color:white;
+    text-decoration: none;
+}
+.side-bar-item.selected{
+    background:#475F77;
+    color:white;
+}
+
+.admin-profile-img{
+    width: 100px;
+    height: 100px;
+}
+
+.owner-sidebar h3{
+    margin:0;
+    padding: 0;
+    text-align: center;
+}
+
+.dashboard-box{
+    padding: 5%;
+    text-align: center;
+     margin: 25px 10px;
+    width: 22%;
+    background:white;
+    color: black;
+    
+}
+.dashboard-box a{
+    color:black;
+}
+.dashboard-box i{
+    padding: 1px;
+}
+.btn-box{
+    padding: 69px 0px 10px 31px;
+    width: 95%;
+    height: 175px;
+    background: whitesmoke;
+}
+.btn-success{
+     border-radius: 4px;
+}
+.flat-field{
+    background:whitesmoke;
+   padding: 3%;
+    width: 97%;
+    height: 175px;
+    margin-left: -33px;
+}
+.flat-field a{
+ padding: 2%;   
+}

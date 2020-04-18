@@ -1,0 +1,86 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2 Mar, 2020, 3:31:27 PM
+    Author     : av
+*/
+
+.menu-header li{
+    float:left;
+    padding: 20px 35px;
+    text-decoration: none;
+}
+
+.menu-header li a{
+    text-decoration: none;
+    color:white;
+}
+.main-header{
+    margin: 0;
+    padding:0;
+    height: 60px;
+    width:100%;
+    background: #204969;
+       
+    
+}
+.menu-header{
+    float: right;
+    list-style: none;
+    margin: 0;
+}
+
+.row-2{
+     background: #dadada;
+    font-family: -webkit-pictograph;
+    font-size: 18px;
+    padding: 1% 0%;
+}
+.text{
+   text-align: center;
+}
+
+
+.form-group{
+        width: 200px;
+      
+}
+.form-control{
+        width: 200px;
+}
+.btn-block{
+
+    width: 50%;
+
+}
+.btn-success{
+   color: lightcyan;
+}
+
+.registration-form-field {
+    width: 300px;
+    padding: 9%;
+    border-radius: 8px;
+}
+.apartment-registration-form , .staff-registration-form, .tenant-registration-form{
+   
+    padding: 3% 3%;
+}
+.apartment-registration-form-child-div{
+    padding: 6% 10% 9.4% 10%;
+    background: white;
+    /* width: 100%; */
+   /* border-top-left-radius: 150px;*/
+}
+.staff-registration-form-child-div{
+    padding: 2% 10% 1.2% 10%;
+    background: white;   
+}
+
+.tenant-registration-form-child-div{
+        padding: 6% 10% 8.6% 10%;
+        background: white;
+}
