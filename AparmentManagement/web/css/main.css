@@ -7,6 +7,7 @@ and open the template in the editor.
     Created on : 16 Feb, 2020, 12:04:24 PM
     Author     : av
 */
+
 .banner-image{
     height:560px !important;
 }
@@ -54,4 +55,12 @@ and open the template in the editor.
                 margin-bottom: 46px;
       
               
+            }
+            .tenant_info_container{
+                    margin-left: 8rem;
+                    background: white;
+                    max-width: 85%;
+                    margin-top: 6rem;
+                    padding: 2rem;
+
             }

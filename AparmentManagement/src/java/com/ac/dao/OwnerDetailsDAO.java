@@ -16,6 +16,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -25,9 +27,10 @@ public class OwnerDetailsDAO{
     private static final String insertOwnerDetail = "INSERT INTO `ownerdetails`(NAME,surName,email,age,address,mobileNo,gender,PASSWORD,adharcard,pancard,dob,Language,image) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);";
     private static final String validateOwner = "SELECT id FROM `ownerdetails` WHERE email=? AND PASSWORD=?";
     private static final String insertApartmentDetail = "INSERT INTO apartmentdetails(apartmentname,totalflat,startno,endNo,floors,image,address,contact,email) VALUES(?,?,?,?,?,?,?,?,?);";
-    private static final String insertTenantDetail ="INSERT INTO tenantdetails(tenantName,surName,email,age,address,mobileNo,workName,PASSWORD,image) VALUES(?,?,?,?,?,?,?,?,?);";
+    private static final String insertTenantDetail ="INSERT INTO tenantdetails(tenantName,surName,email,age,address,mobileNo,workName,PASSWORD,image,ownerId) VALUES(?,?,?,?,?,?,?,?,?,?);";
     private static final String insertStaffDetail ="INSERT INTO staffdetails(NAME,surName,email,age,address,mobileNo,workType,workExperience,PASSWORD,gender,dob,pancard,adharcard,profile) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
     private static final String getOwnerDetails = "SELECT * FROM `ownerdetails`  WHERE email LIKE ? AND PASSWORD LIKE ?;";
+    private static final String getTenatsDetail = "SELECT id,tenantName,surName,flateNo,florNo FROM `tenantdetails` WHERE ownerId =?";
     Connection con =null;
     PreparedStatement pStmnt = null;
     
@@ -115,7 +118,7 @@ public class OwnerDetailsDAO{
     }
    
     
-    public void insertTenantDetail(TenantDetailBO bo){
+    public int insertTenantDetail(TenantDetailBO bo){
         try{
             System.out.print("DAO tenant");
             con = createConnection();
@@ -129,11 +132,13 @@ public class OwnerDetailsDAO{
             pStmnt.setString(7, bo.getWorkName());
             pStmnt.setString(8, bo.getPassword());
             pStmnt.setBlob(9, bo.getImage());
-            pStmnt.executeUpdate();
+            pStmnt.setLong(10,bo.getOwnerId());
+            return pStmnt.executeUpdate();
         }
         catch(SQLException se){
             System.out.println("error in connection " +se);
         }
+        return 0;
     }
 
     public void insertStaffDetail(StaffDetailBO bo){
@@ -165,7 +170,7 @@ public class OwnerDetailsDAO{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
    
-    public OwnerDetailsBO fetchOwnerDetails(String email , String pwd) throws SQLException{
+    public OwnerDetailsBO fetchOwnerDetails(String email , String pwd) throws SQLException,Exception{
         ResultSet rs=null;
         con = createConnection();
         pStmnt = con.prepareStatement(getOwnerDetails);
@@ -189,6 +194,7 @@ public class OwnerDetailsDAO{
             bo.setPancard(rs.getString(11));
             bo.setDob(rs.getDate(12));
             bo.setLanguage(rs.getString(13)); 
+            bo.setOwnerId(rs.getLong(1));
             // Image retrieving
            // Blob blob;
             //blob = rs.getBlob(13);
@@ -196,6 +202,36 @@ public class OwnerDetailsDAO{
             bo.setOwnerProfile(rs.getBinaryStream(13));
         }
         return bo;   
+    }
+    
+    public List<TenantDetailBO> fetchTenantDetails(long ownerId)throws SQLException,Exception{
+        TenantDetailBO bo =null;
+        ResultSet rs=null;
+        List<TenantDetailBO> tenantDetailsList =null;
+        
+        tenantDetailsList = new ArrayList<TenantDetailBO>();
+        
+        con = createConnection();
+        pStmnt = con.prepareStatement(getTenatsDetail);
+        pStmnt.setLong(1, ownerId);
+        rs = pStmnt.executeQuery(); 
+        
+        System.out.print("DAO fetch tenats");
+        while(rs.next()){
+            bo = new TenantDetailBO();
+            System.out.print("rs.getInt(1) "+rs.getInt(1));
+            System.out.print("rs.getString(2) "+rs.getString(2));
+            System.out.print("rs.getString(3) "+rs.getString(3));
+            System.out.print("rs.getInt(4) "+rs.getInt(4));
+            System.out.print("rs.getInt(5)" +rs.getInt(5));
+            bo.setTenantId(rs.getInt(1));
+            bo.setTenantName(rs.getString(2));
+            bo.setSurName(rs.getString(3));
+            bo.setFlateNo(rs.getInt(4));
+            bo.setFlorNo(rs.getInt(5));
+            tenantDetailsList.add(bo);
+        }
+        return tenantDetailsList;   
     }
    
 }

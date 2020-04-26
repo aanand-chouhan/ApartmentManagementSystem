@@ -26,6 +26,7 @@ public class OwnerDetailsDTO {
     private Date dob = null;
     private String language = null;
     private InputStream ownerProfile =null;
+    private long ownerId = 0;
     
     public void setName(String name){
         this.name = name;
@@ -129,5 +130,19 @@ public class OwnerDetailsDTO {
      */
     public void setOwnerProfile(InputStream ownerProfile) {
         this.ownerProfile = ownerProfile;
+    }
+
+    /**
+     * @return the ownerId
+     */
+    public long getOwnerId() {
+        return ownerId;
+    }
+
+    /**
+     * @param ownerId the ownerId to set
+     */
+    public void setOwnerId(long ownerId) {
+        this.ownerId = ownerId;
     }
 }

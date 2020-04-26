@@ -15,6 +15,7 @@ import java.sql.Date;
  * @author av
  */
 public class OwnerDetailsBO {
+    
     private String name = null;
     private String surName = null;
     private String email = null;
@@ -28,6 +29,7 @@ public class OwnerDetailsBO {
     private Date dob = null;
     private String language = null;
     private InputStream ownerProfile = null;
+    private long ownerId = 0l;
     
     public void setName(String name){
         this.name = name;
@@ -189,5 +191,19 @@ public class OwnerDetailsBO {
      */
     public void setOwnerProfile(InputStream ownerProfile) {
         this.ownerProfile = ownerProfile;
+    }
+
+    /**
+     * @return the ownerId
+     */
+    public long getOwnerId() {
+        return ownerId;
+    }
+
+    /**
+     * @param ownerId the ownerId to set
+     */
+    public void setOwnerId(long ownerId) {
+        this.ownerId = ownerId;
     }
 }

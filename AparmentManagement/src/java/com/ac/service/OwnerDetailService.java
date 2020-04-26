@@ -41,7 +41,7 @@ public class OwnerDetailService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-  public OwnerDetailsDTO fetchOwnerDetails(String email, String pwd)throws SQLException{
+  public OwnerDetailsDTO fetchOwnerDetails(String email, String pwd)throws SQLException,Exception{
       OwnerDetailsDTO ownerDetailDTO = null;
       OwnerDetailsDAO ownerDetailDAO = null;
       OwnerDetailsBO ownerDetailBO = null;
@@ -65,6 +65,7 @@ public class OwnerDetailService {
      ownerDetailDTO.setDob(ownerDetailBO.getDob());
      ownerDetailDTO.setLanguage(ownerDetailBO.getLanguage());
      ownerDetailDTO.setOwnerProfile(ownerDetailBO.getOwnerProfile());
+     ownerDetailDTO.setOwnerId(ownerDetailBO.getOwnerId());
      return ownerDetailDTO; 
   }
     

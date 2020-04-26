@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -37,7 +38,7 @@ import javax.servlet.http.Part;
  * @author av
  */
 public class ApartmentManagementController extends HttpServlet{
-    private static String STATUS;
+    private static final String STATUS = "STATUS";
     public ApartmentManagementController(){
         System.out.println("ApartmentManagementController()");
     }
@@ -139,6 +140,8 @@ public class ApartmentManagementController extends HttpServlet{
                 System.out.println("dto.getName() "+dto.getName());
                 session.setAttribute("currentUserEmail", email);
                 session.setAttribute("currentUserPassword", password);
+                session.setAttribute("currentUserId",dto.getOwnerId());
+                System.out.println("dto.getOwnerId() "+dto.getOwnerId());
                 rd = req.getRequestDispatcher("ownerDashboard.jsp");
                }catch(Exception e){
                    System.out.println(e);
@@ -219,10 +222,12 @@ public class ApartmentManagementController extends HttpServlet{
            String password = req.getParameter("password");
            Part image = req.getPart("profileImage");
            InputStream io = null;
+           HttpSession session =null;
+           int result;
            if(image != null){
                io = image.getInputStream();
            }
-           
+           session = req.getSession();
            TenantDetailDTO dto = new TenantDetailDTO();
            dto.setTenantName(tenantName);
            dto.setSurName(surName);
@@ -233,8 +238,19 @@ public class ApartmentManagementController extends HttpServlet{
            dto.setWorkName(workName);
            dto.setPassword(password);
            dto.setImage(io);
+           dto.setOwnerId((Long)session.getAttribute("currentUserId"));
            TenantDetailService service = new TenantDetailService();
-           service.insertTenantDetail(dto);
+           result = service.insertTenantDetail(dto);
+           if(result == 1){
+              rd = req.getRequestDispatcher("tenantRegistration.jsp");
+              req.setAttribute(STATUS, "SUCCESS");
+              rd.forward(req, res);
+           }
+           else{
+              rd = req.getRequestDispatcher("tenantRegistration.jsp");
+              req.setAttribute(STATUS, "FAILED");
+              rd.forward(req, res);
+           }
        }
        
        
@@ -315,9 +331,53 @@ public class ApartmentManagementController extends HttpServlet{
                rd = req.getRequestDispatcher("ownerDashboard");
                req.setAttribute(STATUS, "SQLError");
                rd.forward(req, res);
+           }
+           catch(Exception e){
+               System.err.println("error in controller  "+e);
+               rd = req.getRequestDispatcher("ownerDashboard");
+               req.setAttribute(STATUS, "SQLError");
+               rd.forward(req, res);
            }finally{
                rd.forward(req, res);
            }
+       }
+        else if(path.equalsIgnoreCase("view_tenants_details")){
+           HttpSession session;
+           TenantDetailService service ;
+           List<TenantDetailDTO> dto ;
+           long ownerID;
+           session =  req.getSession();
+           ownerID = (long)session.getAttribute("currentUserId");
+           System.out.print("OwnerId 1 "+ownerID);
+           service = new TenantDetailService();
+          // dto = new ArrayList<>();
+           try{
+               if(ownerID != 0){
+                   System.out.print("entered in to if ");
+                   dto = service.fetchTenantDetails(ownerID);
+                   System.out.print("after dto came ");
+                   dto.forEach(e ->System.out.println("dto object Tenants "+e.getTenantName()));
+                   req.setAttribute("tenantDetails", dto);
+                   rd = req.getRequestDispatcher("tenantsDetails.jsp");
+                   rd.forward(req, res);
+                   
+               }else{
+                    rd = req.getRequestDispatcher("ownerDashboard.jsp");
+                    req.setAttribute(STATUS, "Server Error");
+                    rd.forward(req, res);
+               }
+           }catch(SQLException se){
+               System.out.println("Tenants 1st "+se);
+               rd = req.getRequestDispatcher("ownerDashboard.jsp");
+               req.setAttribute(STATUS, "SQLError");
+               rd.forward(req, res);
+           }catch(Exception e){
+               System.err.println("error in controller  "+e);
+               rd = req.getRequestDispatcher("ownerDashboard.jsp");
+               req.setAttribute(STATUS, "Exception");
+               rd.forward(req, res);
+           }
+          
        }
      }//apartmentRegistration
     }

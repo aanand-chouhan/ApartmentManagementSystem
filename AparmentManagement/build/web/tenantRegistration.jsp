@@ -3,7 +3,7 @@
     Created on : 15 Mar, 2020, 11:36:41 PM
     Author     : av
 --%>
-
+  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -26,6 +26,27 @@
                      <jsp:include page="dashboardSideBar.jsp"/>
                 </div>
                 <div class="row-2 col-md-10">
+                    <% 
+                   String status = (String)request.getAttribute("STATUS");
+                   System.out.println("status "+status);
+               %>
+               <c:set var="status" value="<%=status %>" />
+                <c:if test="${( status != null)}">
+                    <c:choose>
+                        <c:when test="${( status == 'SUCCESS' )}" >
+                            <div class="alert alert-success alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Registered Successfully!!!</strong>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="alert alert-danger alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Registration Failed !!!</strong>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
                     <div class="row tenant-registration-form ">
                         <div class="tenant-registration-form-child-div col-md-12">
                              <div class="row">

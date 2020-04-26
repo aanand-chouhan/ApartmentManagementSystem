@@ -15,6 +15,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/ownerDashboard.css">
         <link rel="stylesheet" href="css/main.css">
+        <script src="js/main.js" type="text/javascript"></script>
     </head>
     <body>
         <div>
